@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "demo-temp",
-  "description": "a typescript pratice temp",
-  "appid": "touristappid",
+  "projectname": "ts-demo",
+  "description": "a ts demo practice",
+  "appid": "wx2daa4abab2827985",
   "setting": {
     "urlCheck": true,
     "es6": false,
