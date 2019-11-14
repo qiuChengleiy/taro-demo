@@ -134,6 +134,9 @@ export default class Index extends Component {
          3. 原生组件触发taro组件 事件方法名要以 on开头监听
         */}
         <wxcomp show="{{true}}" onclick={this.click} />
+
+        {/* 路由 跳转*/}
+        <View >点击跳转到list页面</View>
       </View>
     )
   }
