@@ -1,1 +1,1 @@
-<view>hello wx compnents</view>
+<view bindtap="click">hello wx compnents</view>

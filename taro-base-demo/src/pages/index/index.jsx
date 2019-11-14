@@ -7,6 +7,13 @@ import './index.scss'
 // taro 组件引入
 import Test from '../../components/test'
 
+// 引入全局变量方法
+import { set as setGlobalData, get as getGlobalData } from '../../app.globalData'
+// 设置
+setGlobalData('test', 1)
+// 获取
+//getGlobalData('test')
+
 export default class Index extends Component {
   // 页面配置 --- 对应小程序的页面配置
   config = {
@@ -14,7 +21,7 @@ export default class Index extends Component {
     navigationBarTextStyle: 'black',
     // 组件方面配置 --- 当使用原生组件的时候  一般来讲taro的组件可以灵活使用 遵循react组件规范
     usingComponents: {
-      wxComp: '../../components/wx-comp/index'
+      wxcomp: '../../components/wx-comp/index'
     } //.... 同小程序
   }
 
@@ -88,7 +95,14 @@ export default class Index extends Component {
      return [1,2,3,4].map(item => <Text key={String(item)}>{item}</Text>)
   }
 
-  trigger(prop) { console.log('子组件传来的',prop) }
+  trigger(prop) { 
+    console.log('子组件传来的',prop) 
+  }
+
+  click(prop) {
+    console.log('原生组件传来的', prop)
+    // 原生组件传来的 {type: "click", timeStamp: 5332, target: {…}, currentTarget: {…}, mark: {…}, …}
+  }
 
   render () {
     return (
@@ -114,8 +128,12 @@ export default class Index extends Component {
         {this.renderText()}
         {/* <Ajsx /> */}
 
-        {/* 引入微信小程序原生组件 */}
-        <wxComp></wxComp>
+        {/* 引入微信小程序原生组件  
+         1. 这里完全可以按照原生属性的写法 
+         2. 值得注意的是如果在原生小程序组件中修改js文件是不会被直接编译的 因为没有涉及到引用， 关闭调式 重新编译即可
+         3. 原生组件触发taro组件 事件方法名要以 on开头监听
+        */}
+        <wxcomp show="{{true}}" onclick={this.click} />
       </View>
     )
   }

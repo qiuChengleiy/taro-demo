@@ -1,6 +1,10 @@
 import Taro, { Component } from "@tarojs/taro"
 import { View, Text, Button } from "@tarojs/components"
 
+import { get as getGlobalData } from '../../app.globalData'
+ // 获取全局变量test --- 需要异步去获取 不然获取不到
+setTimeout(() => console.log('全局变量', getGlobalData('test')),3000)
+
 export default class Test extends Component {
   state = {
     context: { }

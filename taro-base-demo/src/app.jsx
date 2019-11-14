@@ -19,7 +19,8 @@ class App extends Component {
   // 全局配置 - 同小程序  ---- 开发工具配置： project.config.json
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/list/index',
     ],
     window: {
       backgroundTextStyle: 'light',
