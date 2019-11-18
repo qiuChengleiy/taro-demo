@@ -1,5 +1,6 @@
 import Taro, { Component } from "@tarojs/taro"
 import { View, Text, Button } from "@tarojs/components"
+// import PropTypes from 'prop-types';
 
 import { get as getGlobalData } from '../../app.globalData'
  // 获取全局变量test --- 需要异步去获取 不然获取不到
@@ -84,6 +85,11 @@ Test.defaultProps = {
     color: 'red',
     onTrigger:  () => { }
 }
+
+// 类型检查
+// Test.prototype = {
+//   color: PropTypes.string,
+// }
 
 // 组件属性传递注意
 

@@ -3,6 +3,9 @@ import Index from './pages/index'
 
 import './app.scss'
 
+// 使用异步函数 --- 需要 yarn add @tarojs/async-await
+import '@tarojs/async-await'
+
 // 环境变量获取：
 
 // 如果需要在 h5 环境中开启 React Devtools

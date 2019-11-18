@@ -1,8 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 
 // 样式单独引入
 import './index.scss'
+
+// 图片引用
+import ImageName from '../../assests/1.jpeg'
+
+// json文件引用
+import User from '../../assests/user.json'
 
 // taro 组件引入
 import Test from '../../components/test'
@@ -23,6 +29,11 @@ export default class Index extends Component {
     usingComponents: {
       wxcomp: '../../components/wx-comp/index'
     } //.... 同小程序
+  }
+
+  // 若使用全局样式的话 --- 基础库 2.2.3
+  static options = {
+    addGlobalClass: true
   }
 
   // 页面加载时触发，一个页面只会调用一次，此时页面 DOM 尚未准备好，还不能和视图层进行交互 1 --- 可以对比 小程序onLoad
@@ -52,7 +63,12 @@ export default class Index extends Component {
     console.log('页面index didHide')
   }
 
+  // 主要用于性能优化 默认返回true 也可以继承 Taro.PureComponent类 无需手动判断
   // 页面是否需要更新，返回 false 不继续更新，否则继续走更新流程
+
+  // 小程序数据 diff（Taro优化）
+  // 在真正调用小程序的 setData 方法之前，Taro 会把页面或组件的 state 和当前页面或组件的 data 做一次 diff，
+  // 只对必要更新的数据做 setData，开发者无需手动优化。
   shouldComponentUpdate(nextProps, nextState) { }
 
   // 页面即将更新
@@ -80,7 +96,7 @@ export default class Index extends Component {
   // 点击tab时触发  仅微信小程序1.9.0
   onTabItemTap(Object) { }
 
-  // 预加载 仅微信小程序支持
+  // 预加载 仅微信小程序支持 --- 注意： 仅相对路径下可用
   componentWillPreload() { }
 
   // 其它 ...查看文档 https://taro-docs.jd.com/taro/docs/tutorial.html#指定页面
@@ -102,6 +118,21 @@ export default class Index extends Component {
   click(prop) {
     console.log('原生组件传来的', prop)
     // 原生组件传来的 {type: "click", timeStamp: 5332, target: {…}, currentTarget: {…}, mark: {…}, …}
+  }
+
+  // 路由跳转
+  route(e) {
+    // 调用跳转方法前使用 this.$preload -- 传入要请求的参数
+    this.$preload('key', 'preload data')
+    // 跳转到目的页面，打开新页面 --- 又返回键
+    Taro.navigateTo({
+      url: '/pages/list/index?name=123'
+    })
+
+    // 跳转到目的页面，在当前页面打开 ---- 没有返回键
+    // Taro.redirectTo({
+    //   url: '/pages/list/index?name=lili'
+    // })
   }
 
   render () {
@@ -135,8 +166,15 @@ export default class Index extends Component {
         */}
         <wxcomp show="{{true}}" onclick={this.click} />
 
-        {/* 路由 跳转*/}
-        <View >点击跳转到list页面</View>
+        {/* 路由 跳转 taro中事件以on开头 并用驼峰写法*/}
+        <View onClick={e => this.route()}>点击跳转到list页面</View>
+        {/* 也可以是网络地址和base64  */}
+        <Image src={ImageName}/>
+        <View>name:{User.name}  age:{User.age}</View>
+        {/* css类名样式 引用外部文件*/}
+        <View className="red-text">我是红色字体</View>
+        {/* 全局 css类名样式 需要配置*/}
+        <View className="blue-text">我是蓝色字体</View>
       </View>
     )
   }
